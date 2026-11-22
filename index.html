@@ -1,0 +1,1498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Siquijor Nature Park Explorer</title>
+  <link rel="icon" type="image/png" href="siquijor-seal.png">
+
+  <style>
+    :root {
+      --green: #153b2d;
+      --green-light: #e7efe9;
+      --cream: #f4f0e5;
+      --gold: #d5a84f;
+      --ink: #20332b;
+      --muted: #627168;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; overflow-x: hidden; }
+
+    body { max-width: 100%; overflow-x: hidden; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      background: #fbfaf6;
+    }
+
+    button, a { font: inherit; }
+
+    button:focus-visible, a:focus-visible {
+      outline: 3px solid var(--gold);
+      outline-offset: 3px;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      background: #cdebf2;
+      color: #263a34;
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      min-height: 76px;
+      margin: auto;
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #263a34;
+      text-decoration: none;
+    }
+
+    .brand-icon { width: 48px; height: 48px; flex: 0 0 auto; object-fit: contain; display: block; }
+    .brand-title, .brand-subtitle { display: block; }
+    .brand-title { font-weight: 700; }
+
+    .brand-subtitle {
+      font-size: 11px;
+      letter-spacing: 2px;
+      opacity: .8;
+      text-transform: uppercase;
+    }
+
+    .main-nav { display: flex; gap: 20px; }
+
+    .main-nav a {
+      color: #263a34;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .main-nav a:hover { color: #d8e6d8; }
+
+    .mobile-menu-toggle {
+      display: none;
+      border: 1px solid #263a34;
+      border-radius: 4px;
+      padding: 7px 11px;
+      background: transparent;
+      color: #263a34;
+      cursor: pointer;
+    }
+
+    .hero-section,
+    .intro-section,
+    .discover-section {
+      width: 100%;
+      max-width: 100%;
+      margin-left: 0;
+      margin-right: 0;
+      box-sizing: border-box;
+    }
+    .hero-section {
+      position: relative;
+      overflow: hidden;
+      min-height: 430px;
+      padding: 48px 24px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      color: white;
+      background:
+        linear-gradient(rgba(8, 30, 22, .38), rgba(8, 30, 22, .38)),
+        url("dens.jpg") center / cover no-repeat;
+      background-color: #17323b;
+    }
+
+    .hero-clouds, .hero-fog, .hero-blink { position: absolute; pointer-events: none; }
+    .hero-clouds { inset: -10%; z-index: 0; background: radial-gradient(ellipse 22% 10% at 18% 34%, rgba(255,255,255,.30), transparent 72%), radial-gradient(ellipse 24% 11% at 58% 24%, rgba(255,255,255,.24), transparent 72%), radial-gradient(ellipse 20% 9% at 84% 42%, rgba(255,255,255,.25), transparent 72%); filter: blur(12px); animation: cloud-drift 7s ease-in-out infinite alternate; }
+    .hero-fog { inset: auto -15% -8%; z-index: 0; height: 42%; background: radial-gradient(ellipse 35% 35% at 24% 72%, rgba(255,255,255,.30), transparent 75%), radial-gradient(ellipse 40% 40% at 62% 62%, rgba(255,255,255,.27), transparent 76%); filter: blur(18px); animation: fog-drift 10s ease-in-out infinite alternate; }
+    .hero-blink { inset: 0; z-index: 1; background: rgba(255,239,205,.18); animation: banner-blink 3s ease-in-out infinite; }
+    .hero-content { position: relative; z-index: 2; max-width: 800px; }
+    @keyframes banner-blink { 0%,100% { opacity: .12; } 50% { opacity: .42; } }
+    @keyframes cloud-drift { from { transform: translateX(-5%); } to { transform: translateX(5%); } }
+    @keyframes fog-drift { from { transform: translateX(5%) translateY(3px); opacity: .42; } to { transform: translateX(-5%) translateY(-5px); opacity: .7; } }
+    @media (prefers-reduced-motion: reduce) { .hero-clouds, .hero-fog, .hero-blink { animation: none; } }
+    .hero-eyebrow { letter-spacing: 5px; font-size: 12px; }
+
+    .hero-title {
+      margin: 12px 0;
+      font-family: Georgia, serif;
+      font-size: clamp(48px, 8vw, 88px);
+      line-height: 1;
+    }
+
+    .hero-subtitle {
+      color: #e5d5a8;
+      letter-spacing: 5px;
+      font-size: 13px;
+    }
+
+    .hero-cta {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 13px 19px;
+      border-radius: 4px;
+      background: var(--cream);
+      color: var(--green);
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    .intro-section { padding: 4px 24px 12px; }
+    .discover-section { padding: 34px 24px; }
+    .intro-section { padding: 4px 24px 12px; background: #cdebf2; text-align: center; color: #000; }
+    .intro-section .section-eyebrow { margin: 4px 0; }
+    .intro-section .section-title { margin: 4px 0 6px; font-size: clamp(30px, 4vw, 38px); line-height: 1.05; }
+    .intro-section .section-subtitle { max-width: 900px; font-size: 14px; line-height: 1.35; }
+    .intro-section .section-eyebrow, .intro-section .section-title, .intro-section .section-subtitle { color: #000; }
+    .discover-section { background: #cdebf2; }
+
+    .section-inner {
+      width: 100%;
+      max-width: none;
+      margin: 0 auto;
+      padding: 0 28px;
+      box-sizing: border-box;
+    }
+
+    .section-eyebrow {
+      color: #597662;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+    }
+
+    .section-title {
+      margin: 8px 0 12px;
+      color: var(--green);
+      font-family: Georgia, serif;
+      font-size: clamp(32px, 5vw, 48px);
+      line-height: 1.15;
+    }
+
+    .section-subtitle {
+      max-width: 760px;
+      margin: 0 auto;
+      color: var(--muted);
+    }
+
+    .municipalities-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-top: 35px;
+    }
+
+    .municipality-card {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      padding: 0;
+      border: 1px solid #000;
+      border-radius: 8px;
+      background: white;
+      color: var(--ink);
+      text-align: left;
+      cursor: pointer;
+      box-shadow: 0 2px 10px rgba(20, 45, 33, .12);
+    }
+
+    .card-image-wrap {
+      position: relative;
+      display: block;
+      height: 230px;
+      overflow: hidden;
+      background: #263d32;
+    }
+
+    .municipality-card img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform .35s;
+    }
+
+    .municipality-card:hover img { transform: scale(1.06); }
+
+    .card-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: flex-start;
+      padding: 20px;
+      color: white;
+      background: linear-gradient(transparent 25%, rgba(0, 0, 0, .78));
+    }
+
+    .card-caption {
+      display: block;
+      padding: 12px 16px 15px;
+      background: #f5f0e6;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .municipality-name {
+      margin: 0;
+      font-family: Georgia, serif;
+      font-size: 27px;
+    }
+
+    .card-tag { font-size: 13px; }
+    .card-arrow { margin-top: 5px; color: #f1d38b; font-weight: 700; }
+    .discover-section .section-eyebrow,
+    .discover-section .section-title,
+    .discover-section .section-subtitle,
+    .discover-section .municipality-card,
+    .discover-section .card-caption,
+    .discover-section .card-overlay,
+    .discover-section .card-arrow { color: #000; }
+    .discover-section .section-eyebrow { color: #000; font-size: 10px; letter-spacing: 3px; }
+    .discover-section .section-title { color: #000; font-size: clamp(27px, 3.8vw, 36px); }
+    .discover-section .section-subtitle { color: #000; font-size: 13px; }
+    .discover-section .card-overlay { inset: 0; padding: 20px; color: #fff; background: linear-gradient(transparent 25%, rgba(0, 0, 0, .78)); }
+    .discover-section .municipality-name { display: block; max-width: 100%; padding: 0; border-radius: 0; background: transparent; color: #fff; font-size: 40px; font-weight: 700; line-height: 1.05; }
+    .discover-section .card-tag { font-size: 13px; }
+    .discover-section .card-arrow { display: block; margin-top: 5px; padding: 0; border-radius: 0; background: transparent; color: #f1d38b; font-size: 16px; font-weight: 700; }
+    .discover-section .card-caption { font-size: 14px; }
+
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 10;
+      display: none;
+      overflow-y: auto;
+      padding: 24px;
+      background: rgba(8, 21, 15, .78);
+    }
+
+    .modal-backdrop.is-open { display: block; }
+
+    .modal-content {
+      position: relative;
+      width: min(1000px, 100%);
+      margin: 20px auto;
+      max-height: calc(100vh - 40px);
+      overflow-x: hidden;
+      overflow-y: auto;
+      border-radius: 12px;
+      background: #fff1f3;
+      box-shadow: 0 15px 45px rgba(15, 35, 26, .25);
+    }
+
+    .park-picker-sticky {
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      padding: 1px 0 7px;
+      background: #fff1f3;
+    }
+
+    .park-tabs-bar {
+      display: flex;
+      gap: 4px;
+      overflow-x: auto;
+      margin: 0 10px 7px;
+      padding: 5px 8px;
+      background: #f1f1ef;
+      border-radius: 6px;
+    }
+    .modal-close-btn {
+      position: sticky;
+      top: 8px;
+      display: block;
+      margin: 8px 14px -50px auto;
+      z-index: 8;
+      width: 42px;
+      height: 42px;
+      border: 0;
+      border-radius: 50%;
+      background: white;
+      color: var(--green);
+      font-size: 28px;
+      cursor: pointer;
+    }
+
+    .modal-header-banner {
+      height: 2in;
+      min-height: 2in;
+      display: flex;
+      align-items: end;
+      color: #000;
+      background-position: center;
+      background-size: 100% 100%, 160px auto;
+      background-repeat: no-repeat;
+      background-color: #fff1f3;
+    }
+
+    .modal-header-overlay {
+      position: relative;
+      width: calc(100% - 40px);
+      margin: 8px auto;
+      padding: 12px;
+      border: 2px solid #000;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, .12);
+      text-align: center;
+    }
+    .modal-town-badge {
+      display: inline-block;
+      padding: 5px 10px;
+      border-radius: 20px;
+      background: var(--gold);
+      color: #24372c;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .modal-municipality-title {
+      margin: 10px 0 0;
+      font-family: Georgia, serif;
+      font-size: clamp(34px, 6vw, 54px);
+      color: #000;
+    }
+
+    .modal-explorer-body { padding: 25px 30px 40px; background: #fff1f3; }
+
+    .park-selector-title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin: 4px 10px 3px;
+      padding: 5px 12px;
+      background: transparent;
+      color: #000;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+     .park-selector-hint { display: none; }
+
+    .park-chips-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin: 0 16px 7px;
+      padding-bottom: 0;
+    }
+
+    .park-chip {
+      padding: 6px 10px;
+      border: 1px solid #cbd8ce;
+      border-radius: 22px;
+      background: white;
+      color: var(--green);
+      font-size: 15px;
+      cursor: pointer;
+    }
+
+    .park-chip.active {
+      border-color: #000;
+      background: #dedede;
+      color: #000;
+    }
+
+.park-detail-hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 20px;
+      align-items: stretch;
+      padding: 18px 20px;
+      border: 0;
+      box-sizing: border-box;
+      border-radius: 8px;
+      background: #f8dfe6;
+    }
+
+    .park-hero-visual,
+    .park-about-card {
+      position: relative;
+      min-width: 0;
+      height: 300px;
+      overflow: hidden;
+      border: 0;
+      border-radius: 6px;
+      box-sizing: border-box;
+    }
+
+    .park-hero-visual { background: #e6e6e6; }
+
+    .park-hero-image {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: center;
+    }
+
+    .park-hero-content {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background: linear-gradient(rgba(0, 0, 0, .28), rgba(0, 0, 0, .62));
+      color: #fff;
+      text-align: center;
+    }
+
+    .park-about-card {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 24px;
+      background: #e6e6e6;
+      color: #000;
+    }
+
+    .park-about-card .pane-title { color: #000; }
+    .park-about-card .pane-desc { color: #000; line-height: 1.7; }
+    .park-about-card {
+      display: block;
+      padding: 0;
+      overflow-y: auto;
+    }
+
+    .park-about-card .park-pane {
+      min-height: 0;
+      padding: 20px;
+    }
+
+    .park-about-card #pane-history,
+    .park-about-card #pane-conservation,
+    .park-about-card #pane-location {
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      padding: 20px;
+    }
+
+    .park-category-badge {
+      color: #fff;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .park-detail-name {
+      margin: 5px 0 0;
+      color: #fff;
+      font-family: Georgia, serif;
+      font-size: clamp(30px, 3.5vw, 42px);
+      line-height: 1.15;
+    }
+
+    .park-detail-location { margin: 8px 0 0; color: #fff; }
+    .park-hero-content, .park-category-badge, .park-detail-name, .park-detail-location { color: #fff !important; }
+
+    .park-tabs-bar {
+      display: flex;
+      gap: 4px;
+      overflow-x: auto;
+      padding: 10px;
+      background: #f1f1ef;
+      border-radius: 6px;
+    }
+
+    .park-tab {
+      flex: 1;
+      min-width: 90px;
+      padding: 7px 8px;
+      border: 0;
+      border-radius: 5px;
+      background: transparent;
+      color: var(--green);
+      cursor: pointer;
+    }
+
+    .park-tab.active { background: var(--green); color: white; }
+
+    .park-pane {
+      display: none;
+      min-height: 230px;
+      padding: 24px 10px;
+    }
+
+    .park-pane.active { display: block; }
+    #pane-history,
+    #pane-conservation {
+      border: 1px solid #000;
+      border-radius: 6px;
+      background: #f1f1ef;
+      padding: 20px;
+    }
+    #pane-location {
+      border: 1px solid #000;
+      border-radius: 6px;
+      background: #f1f1ef;
+      padding: 20px;
+    }
+
+    #pane-location .hero-cta {
+      display: table;
+      margin: 24px auto 0;
+      padding: 12px 18px;
+      border: 1px solid #000;
+      border-radius: 6px;
+      background: #e7e7e7;
+      color: #000;
+      text-align: center;
+    }
+
+    #pane-about .pane-content-grid {
+      width: 100%;
+      grid-template-columns: minmax(0, 1fr);
+      border: 1px solid #000;
+      border-radius: 6px;
+      background: #f1f1ef;
+      padding: 20px;
+    }
+    #pane-about .pane-content-grid > div { min-width: 0; }
+    #pane-about .pane-desc { color: #000; line-height: 1.7; }
+    #pane-about .pane-title { color: #000; }
+    .pane-content-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 25px;
+    }
+
+    .pane-title {
+      margin: 0 0 8px;
+      color: var(--green);
+      font-family: Georgia, serif;
+      font-size: 23px;
+    }
+
+    .pane-subtitle { color: var(--green); }
+    .pane-desc { color: #4e5d54; }
+    .highlights-list { padding-left: 20px; }
+
+    .quick-fact-card, .info-card {
+      margin-bottom: 10px;
+      padding: 14px;
+      border-radius: 7px;
+      background: var(--green-light);
+    }
+
+    .qf-label {
+      color: var(--muted);
+      font-size: 12px;
+      text-transform: uppercase;
+    }
+
+    .qf-val { color: var(--green); font-weight: 700; }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+      justify-content: center;
+      justify-items: center;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .gallery-grid figure { width: 100%; margin: 0; }
+
+    .gallery-grid img {
+      display: block;
+      width: 100%;
+      height: 190px;
+      object-fit: cover;
+      border-radius: 6px;
+      background: #e7efe9;
+    }
+
+    .gallery-grid figcaption {
+      padding: 5px 2px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .site-footer {
+      padding: 8px 24px;
+      line-height: 1.25;
+      background: #cdebf2;
+      color: #263a34;
+      text-align: center;
+    }
+    .site-footer p { margin: 0; font-size: 14px; }
+    .site-footer a { display: inline-block; margin-top: 2px; color: #000 !important; font-size: 14px; }
+    .modal-content,
+    .modal-header-banner,
+    .modal-municipality-title,
+    #modalTagline,
+    .park-selector-title-row,
+    .park-selector-hint,
+    .park-chip,
+    .park-tab,
+    .park-detail-hero,
+    .park-hero-content,
+    .park-category-badge,
+    .park-detail-name,
+    .park-detail-location,
+    .park-pane,
+    .pane-title,
+    .pane-subtitle,
+    .pane-desc,
+    .highlights-list,
+    .qf-label,
+    .qf-val,
+    .gallery-grid figcaption,
+    .modal-close-btn { color: #000; }
+    .park-chip.active { border-color: #000; background: #dedede; color: #000; }
+    .park-tab.active { border-color: #8ebdc7; background: #cdebf2; color: #000; }
+
+    .modal-municipality-title { font-size: clamp(30px, 5.5vw, 48px); }
+    #modalTagline { margin-top: 10px; font-size: 17px; font-weight: 500; }
+    .park-selector-title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin: 4px 10px 3px;
+      padding: 5px 12px;
+      background: transparent;
+      color: #000;
+      font-size: 13px;
+      font-weight: 700;
+    }
+    #pane-about .pane-content-grid > div { min-width: 0; }
+    #pane-about .pane-desc { color: #000; line-height: 1.7; }
+    #pane-about .pane-title { color: #000; }
+    .pane-content-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 900px) {
+      .municipalities-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 680px) {
+      .municipalities-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 520px) {
+      .section-inner { padding-left: 16px; padding-right: 16px; }
+      .municipalities-grid { grid-template-columns: 1fr; }
+      .modal-backdrop { padding: 8px; }
+      .modal-content { margin: 8px auto; }
+      .modal-header-overlay { margin: 8px auto; padding: 10px; }
+      .modal-explorer-body { padding: 20px; }
+      .park-detail-hero { grid-template-columns: 1fr; padding: 10px 14px; }
+      .park-hero-visual, .park-about-card { height: 250px; }
+      .park-tab { min-width: 78px; font-size: 14px; }
+      .gallery-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    .map-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 30;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: rgba(8, 21, 15, .78);
+    }
+
+    .map-modal.is-open { display: flex; }
+
+    .map-modal-panel {
+      position: relative;
+      width: min(1000px, 96vw);
+      height: min(720px, 88vh);
+      overflow: hidden;
+      border: 1px solid #000;
+      border-radius: 8px;
+      background: #f1f1ef;
+      box-shadow: 0 15px 45px rgba(0, 0, 0, .3);
+    }
+
+    .map-modal-panel iframe {
+      display: block;
+      width: 100%;
+      height: calc(100% - 44px);
+      border: 0;
+    }
+
+    .map-modal-close {
+      position: absolute;
+      top: 8px;
+      right: 10px;
+      z-index: 2;
+      width: 34px;
+      height: 34px;
+      border: 1px solid #000;
+      border-radius: 50%;
+      background: #fff;
+      color: #000;
+      font-size: 24px;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    .map-external-link {
+      display: block;
+      height: 44px;
+      padding: 12px;
+      border-top: 1px solid #aaa;
+      background: #f1f1ef;
+      color: #000;
+      text-align: center;
+    }
+
+    .image-lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 40;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: rgba(0, 0, 0, .82);
+    }
+
+    .image-lightbox.is-open { display: flex; }
+
+    .image-lightbox-panel {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: auto;
+      height: auto;
+      max-width: 96vw;
+      max-height: 94vh;
+      padding: 0;
+      border: 0;
+      border-radius: 6px;
+      background: transparent;
+      box-shadow: none;
+    }
+
+    .image-lightbox-panel img {
+      display: block;
+      max-width: 96vw;
+      max-height: 94vh;
+      object-fit: contain;
+      border-radius: 6px;
+    }
+
+    .image-lightbox-close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      z-index: 1;
+      width: 40px;
+      height: 40px;
+      border: 0;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, .94);
+      color: #000;
+      font-size: 26px;
+      line-height: 1;
+      cursor: pointer;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, .28);
+    }
+  </style>
+</head>
+
+<body>
+  <header class="site-header">
+    <div class="nav-container">
+      <a href="#hero" class="brand-logo">
+        <img class="brand-icon" src="siquijor-seal.png" alt="Municipality of Siquijor seal">
+        <span>
+          <span class="brand-title">Siquijor Nature Park</span>
+          <span class="brand-subtitle">Information System</span>
+        </span>
+      </a>
+
+      <button class="mobile-menu-toggle" type="button" aria-expanded="false" aria-controls="main-nav">
+        ☰ Menu
+      </button>
+
+      <nav class="main-nav" id="main-nav">
+        <a href="#hero">Home</a>
+        <a href="#discover">Municipalities</a>
+        <a href="#about-island">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="intro-section" id="about-island">
+      <div class="section-inner">
+        <p class="section-eyebrow">Isla del Fuego</p>
+        <h2 class="section-title">A small island with many ways to explore</h2>
+        <p class="section-subtitle">
+          Discover forests, springs, waterfalls, coastal areas, and marine
+          sanctuaries across Siquijor’s six municipalities.
+        </p>
+      </div>
+    </section>
+
+
+
+    <section class="hero-section" id="hero">
+      <div class="hero-clouds" aria-hidden="true"></div>
+      <div class="hero-fog" aria-hidden="true"></div>
+      <div class="hero-blink" aria-hidden="true"></div>
+      <div class="hero-content">
+        <p class="hero-eyebrow">A LITTLE CLOSER TO NATURE</p>
+        <h1 class="hero-title">Siquijor Nature<br>Park</h1>
+        <p class="hero-subtitle">INFORMATION SYSTEM</p>
+        <a href="#discover" class="hero-cta">Explore the municipalities ↓</a>
+      </div>
+    </section>
+
+    <section class="discover-section" id="discover">
+      <div class="section-inner">
+        <p class="section-eyebrow">Explore the island</p>
+        <h2 class="section-title">Choose a municipality</h2>
+        <p class="section-subtitle">Select a card, then choose a park to view its details and pictures.</p>
+        <div class="municipalities-grid" id="municipalitiesGrid"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>Explore Siquijor thoughtfully. Respect local communities and protected nature areas.</p>
+    <a href="#hero">Back to top ↑</a>
+  </footer>
+
+  <div class="modal-backdrop" id="municipalityModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-content">
+      <button class="modal-close-btn" id="modalCloseBtn" type="button" aria-label="Close dialog">×</button>
+      <div class="park-picker-sticky">
+
+      <div class="park-selector-title-row">
+          <span>🌿 NATURE PARKS IN THIS MUNICIPALITY</span>
+        </div>
+
+      <div class="park-chips-container" id="parkChipsContainer"></div>
+        <div class="park-tabs-bar" role="tablist">
+          <button class="park-tab active" data-tab="about">📖 About</button>
+          <button class="park-tab" data-tab="history">📜 History</button>
+          <button class="park-tab" data-tab="gallery">🖼 Gallery</button>
+          <button class="park-tab" data-tab="contact">☎ Contact</button>
+          <button class="park-tab" data-tab="conservation">🌿 Conservation</button>
+          <button class="park-tab" data-tab="location">📍 Location</button>
+        </div>
+      </div>
+
+      <div class="modal-header-banner" id="modalBanner">
+        <div class="modal-header-overlay">
+          <h2 class="modal-municipality-title" id="modalTitle"></h2>
+          <p id="modalTagline"></p>
+        </div>
+      </div>
+
+      <div class="modal-explorer-body">
+
+        <div class="park-detail-hero" id="parkHero">
+          <div class="park-hero-visual">
+            <img class="park-hero-image" id="parkHeroImage" alt="">
+            <div class="park-hero-content">
+              <span class="park-category-badge" id="parkCategory"></span>
+              <h3 class="park-detail-name" id="parkName"></h3>
+              <p class="park-detail-location" id="parkLocationSummary"></p>
+            </div>
+          </div>
+          <section class="park-about-card">
+            <section class="park-pane active" id="pane-about">
+              <h4 class="pane-title">About this place</h4>
+              <p class="pane-desc" id="aboutSummary"></p>
+            </section>
+            <section class="park-pane" id="pane-history">
+          <h4 class="pane-title">History and local context</h4>
+          <p class="pane-desc" id="historyNarrative"></p>
+        </section>
+
+        <section class="park-pane" id="pane-location">
+          <h4 class="pane-title">Location and getting there</h4>
+          <p><strong>Municipality:</strong> <span id="locAddress"></span></p>
+          <p id="locDirections" class="pane-desc"></p>
+          <a id="locMapBtn" class="hero-cta" target="_blank" rel="noopener">Open map search ↗</a>
+        </section>
+
+        <section class="park-pane" id="pane-contact">
+          <h4 class="pane-title">Contact and visitor information</h4>
+          <div class="info-card"><strong>Local tourism office</strong><br><span id="contactOffice"></span></div>
+          <div class="info-card"><strong>Phone / email</strong><br><span>Contact details: confirm with the municipality.</span></div>
+          <p class="pane-desc">Check current opening hours, access, fees, and guide availability before traveling.</p>
+        </section>
+
+        <section class="park-pane" id="pane-conservation">
+          <h4 class="pane-title">Conservation</h4>
+          <p class="pane-desc" id="conservationText"></p>
+        </section>
+
+        <section class="park-pane" id="pane-gallery">
+          <h4 class="pane-title">Pictures of this park</h4>
+          <div class="gallery-grid" id="galleryGrid"></div>
+        </section>
+          </section>
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+
+
+  <div class="map-modal" id="mapModal" aria-hidden="true">
+    <div class="map-modal-panel" role="dialog" aria-modal="true" aria-label="Google Maps location">
+      <button class="map-modal-close" id="mapModalClose" type="button" aria-label="Close map">×</button>
+      <iframe id="mapFrame" title="Google Maps park location" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+      <a class="map-external-link" id="mapExternalLink" target="_blank" rel="noopener">Open in Google Maps ↗</a>
+    </div>
+  </div>
+  <div class="image-lightbox" id="imageLightbox" aria-hidden="true">
+    <div class="image-lightbox-panel" role="dialog" aria-modal="true" aria-label="Gallery image preview">
+      <button class="image-lightbox-close" id="imageLightboxClose" type="button" aria-label="Close image">×</button>
+      <img id="lightboxImage" alt="Expanded gallery image">
+    </div>
+  </div>
+  <script>
+    /*
+      Put your photos in folders beside this HTML file:
+
+      images/siquijor/mt-bandilaan-1.jpg
+      images/siquijor/mt-bandilaan-2.jpg
+      sanjuan.jpg
+      etc.
+
+      Add more filenames to a park's images array to show more photos.
+    */
+    const towns = {
+      siquijor: {
+        name: "Siquijor",
+        tagline: "Island capital, highland forest, springs, and nature learning.",
+        cover: "dens.jpg",
+      seal: "siquijor-seal.png",
+        parks: [
+          {
+  name: "Mt. Bandilaan",
+  category: "Highland forest",
+  about: "An upland landscape known for forest scenery, cooler air, trails, and viewpoints.",
+  history: "",
+  contact: "Ask the Siquijor Municipal Tourism Office for current visitor information.",
+  conservation: "Stay on marked trails, avoid disturbing wildlife, and take your rubbish with you.",
+  images: ["bandilaan1.jpg","ban4.jpg","ban5.jpg"]
+},
+          { name: "Guiwanon Spring Park", category: "Spring and mangrove park", about: "A nature stop where visitors can appreciate spring water, mangroves, and coastal ecology in a shaded setting.", images: ["guii1.png","guii2.jpg","guii3.jpg"] },
+         
+          {
+  name: "Siquijor Butterfly Sanctuary",
+  category: "Wildlife sanctuary",
+  about: "The Siquijor Butterfly Sanctuary, also known as the Siquijor Butterfly Garden, is a small family-run eco-tourism and conservation site located in the highlands of Siquijor Island near Mount Bandilaan. It is a peaceful place where visitors can see different species of butterflies in a natural garden environment. The sanctuary promotes environmental awareness, butterfly conservation, and appreciation of nature.",
+  history: "The Siquijor Butterfly Sanctuary was established and managed by local caretaker Dante Jumapit. It was created to breed, protect, and conserve local butterfly species while educating visitors about their importance to the environment.It has also become an educational and eco-tourism destination for visitors interested in nature.",
+  contact: "Reachable via mobile numbers such as 0946 628 8062, 0960 676 4835, or 0933 357 007",
+  conservation: "The sanctuary breeds local butterfly species, releases some into natural habitats, and protects the plants they need. It also teaches visitors about the butterfly life cycle, biodiversity, and caring for the environment.",
+  images: ["butt5.jpg","butt4.jpg","butt3.jpg"]
+},
+        ]
+
+
+      },
+      sanjuan: {
+        name: "San Juan",
+        tagline: "Coastal scenery, springs, waterfalls, and community marine areas.",
+        cover: "sanjuan.jpg",
+      seal: "seal-sanjuan.png",
+        parks: [
+          { name: "Capilay Spring Park", category: "Spring park", about: "A leafy town park centered around a natural spring and a relaxed local gathering place.", images: ["capp1.jpg","cappp2.jpg","cappp3.jpg"] },
+          { name: "Pitogo Cliff Nature Park", category: "Coastal viewpoint", about: "A scenic coastal area with elevated views. Keep a safe distance from cliff edges.", images: ["pitt1.jpg","pitt3.jpg","pitt4.jpg"] },
+          { name: "Lugnason Falls", category: "Waterfall", about: "A forest waterfall and freshwater destination. Check water conditions locally before swimming.", images: ["lug1.png","lug2.png","lug3.png"] },
+          { name: "Maite Marine Sanctuary", category: "Marine sanctuary", about: "A protected coastal habitat where visitors can learn about reef life and responsible snorkeling.", images: ["matt1.jpg","matt3.jpg","matt5.jpg"] },
+          { name: "Tubod Marine Sanctuary", category: "Marine sanctuary", about: "A community-managed reef area popular for snorkeling. Do not stand on coral or feed marine life.", images: ["tubb1.jpg","tubb2.jpg","tubb3.jpg"] },
+          { name: "Paliton Natural Coastal Area", category: "Coastal area", about: "A beautiful stretch of coastline known for beach scenery and clear water. Keep it clean.", images: ["pall1.png","pall2.png","pall3.png"] }
+        ]
+      },
+      maria: {
+        name: "Maria",
+        tagline: "Eastern coast landscapes, forest roads, waterfalls, and marine life.",
+        cover: "maria.jpg",
+      seal: "seal-maria.png",
+        parks: [
+          { name: "Salagdoong Man-Made Forest", category: "Forest landscape", about: "A tree-lined forest area near the coast, offering shade and a scenic route.", images: ["sall3.png","sall1.png","sall4.png"] },
+          { name: "Olang Marine Sanctuary", category: "Marine sanctuary", about: "A protected marine area that supports coastal habitats. Ask local guides about permitted activities.", images: ["oll1.png","oll2.png","oll3.png",] },
+          { name: "Minalulan Man Made Forest", category: "Man-made forest", about: "The Minalulan Man-Made Forest, also called the Liloan or Salagdoong Man-Made Forest, is a scenic roadside forest in Maria along the route to Salagdoong Beach. Entrance and parking are free. It is open daily during daylight hours; visit in the morning for cool, shaded light.", images: ["minn1.png","minn2.png","minn3.png",] }
+        ]
+      },
+      lazi: {
+        name: "Lazi",
+        tagline: "Waterfalls, forest scenery, cold springs, and cultural landmarks.",
+        cover: "lazi.jpg",
+      seal: "seal-lazi.png",
+        parks: [
+          
+          { name: "Old Enchanted", category: "Heritage tree", about: "A much-loved old balete tree and freshwater stop surrounded by local stories and nature.", images: ["ball1.png","ball2.png","ball3.jpg"] },
+          { name: "Bolo-bolo Cold Spring", category: "Cold spring", about: "A refreshing spring destination for a quiet break. Follow posted swimming and safety guidance.", images: ["boll1.png","boll2.png","boll3.png"] },
+          { name: "Locong Falls", category: "Waterfall", about: "A peaceful freshwater setting surrounded by tropical greenery. Rocks may be slippery.", images: ["lokk1.png","lokk2.png","lokk3.png",] },
+          { name: "Cambugahay Falls", category: "Waterfall", about: "A series of blue-green pools and cascades, among the island’s best-known nature attractions.", images: ["camm1.png","camm2.png","camm3.png",] },
+          { name: "Ostrich Park Siquijor", category: "Private animal park", about: "A family-run animal park in Sitio Mohon, Barangay Nagerong, Lazi. Visitors may interact with ostriches, koi, and ornamental poultry under staff supervision. Confirm current admission and opening hours before visiting.", images: ["oss1.png","oss2.png","oss3.png",] }
+        ]
+      },
+      larena: {
+        name: "Larena",
+        tagline: "Harbor town, coastal scenery, and community-managed marine areas.",
+        cover: "larena.jpg",
+      seal: "seal-larena.png",
+        parks: [
+          { name: "Sandugan Marine Sanctuary", category: "Marine sanctuary", about: "A coastal sanctuary with marine habitats and community stewardship. Ask local guides about access.", images: ["sann1.png","sann2.png","sann3.png"] },
+          { name: "Cangbagsa Coastal Natural Area", category: "Coastal area", about: "A natural coastal landscape suited to a quiet visit. Take all waste with you.", images: ["cangg3.png","cangg2.png","cangg1.png"] }
+        ]
+      },
+      enrique_villanueva: {
+        name: "Enrique Villanueva",
+        tagline: "A quieter northeastern coast with rich marine habitats.",
+        cover: "talingting.jpg",
+      seal: "seal-enrique.png",
+        parks: [
+          { name: "Tulapos Marine Sanctuary", category: "Marine sanctuary", about: "A known community marine sanctuary where guided visits can introduce visitors to reef life and conservation.", images: ["tulll1.png","tulll2.png","tulll3.png"] },
+          { name: "Bitaug Marine Protected Area", category: "Marine protected area", about: "A protected coastal habitat. Follow local guidance on swimming, boating, and snorkeling boundaries.", images: ["bit1.png","bit2.jpg","bit3.jpg"] },
+          { name: "Bino-ongan Marine Sanctuary", category: "Marine sanctuary", about: "A community conservation area that helps protect marine life and coastal ecosystems.", images: ["binn1.jpg","binn2.jpg","binn3.jpg"] }
+        ]
+      }
+    };
+
+    const parkInfo = {
+      "Mt. Bandilaan": {
+        about: "Mt. Bandilaan National Park, also called Mt. Bandilaan View Park, is Siquijor’s highest peak and a protected forest and watershed in the island’s central highlands, mainly within Lazi. The summit has a viewing tower reached by a concrete stairway. The notes list free entry and daily hours of 6:00 AM–7:00 PM; confirm current access locally.",
+        history: "Declared a forest and watershed reserve in 1940 under Presidential Proclamation No. 523. The mountain is also culturally associated with Siquijor’s traditional healers (mananambal) and the Pahi-uli Healing Festival during Holy Week.",
+        conservation: "The protected forest and watershed help conserve native plants, birds, and water sources. Stay on established paths, avoid disturbing wildlife, and take all rubbish with you.",
+        contact: "For protected-area or research inquiries, contact DENR through its Protected Area Information System, or ask the Siquijor Provincial Tourism Office. Confirm current office details before visiting."
+      },
+      "Guiwanon Spring Park": {
+        about: "Guiwanon Spring Park is a community eco-park and mangrove sanctuary in Barangay Luyang along Siquijor Circumferential Road, near the Larena–Siquijor boundary. Elevated wooden and bamboo walkways pass through mangroves toward a lagoon and an ocean-view platform. The notes list a ₱10 entrance fee; check current fees and facility availability locally.",
+        history: "Community and cooperative efforts, with support reported from organizations including the Asian Development Bank, helped develop the coastal wetland as a protected park. Walkways were built through the mangroves around freshwater springs flowing toward the Bohol Sea.",
+        conservation: "The mangroves provide habitat and nursery areas for coastal wildlife. Community groups have also supported mangrove seedling propagation. Stay on walkways and avoid disturbing plants and animals.",
+        contact: "Address: Barangay Luyang, Siquijor. A community contact listed in the supplied notes is (0926) 460-6010; confirm that it is current. Ask the local tourism office about access and operations."
+      },
+      "Kamatabwan Forest": {
+        about: "Kamatabwan Forest is a quiet wooded area in Siquijor with limited visitor facilities. The supplied notes describe it as a rural forest patch rather than a commercial park; access is generally by local road, scooter, or tricycle. Confirm the exact route and access with local residents before visiting.",
+        history: "Siquijor once had broader native forest cover associated with tugus (molave) trees. Kamatabwan is described in the supplied notes as part of the island’s remaining interior greenery and watershed landscape.",
+        conservation: "Remaining forest patches support native plants, birds, and watershed functions. Keep to existing routes, do not cut or collect plants, and carry out all rubbish.",
+        contact: "No dedicated visitor center or hotline is listed. For environmental questions or access guidance, ask the local PENRO/MENRO, municipal tourism office, or a local guide."
+      },
+      "Siquijor Butterfly Sanctuary": {
+        about: "The Siquijor Butterfly Sanctuary is a small family-run nature and learning site in the island’s central highlands near Mt. Bandilaan. Visitors can see butterflies at different life stages in a garden enclosure. The supplied notes list entrance fees of about ₱100 for adults and ₱50 for children; confirm current rates and hours before visiting.",
+        history: "The supplied notes say the sanctuary was started around 2008 by local resident Dante Jumapit as a grassroots butterfly breeding, conservation, and education project.",
+        conservation: "The sanctuary breeds and cares for native butterfly species and shares information about their life cycle. Follow the caretaker’s instructions and avoid handling butterflies or damaging host plants.",
+        contact: "The notes list Sitio Cabilao, Barangay Cang-Apa, Larena, and a general inquiry number of +63 997 166 8770. Confirm the location, number, and opening hours directly before travelling."
+      },
+      "Capilay Spring Park": {
+        about: "Capilay Spring Park is a public freshwater spring and town plaza in Poblacion, San Juan. Mountain-fed water flows through connected pools before continuing toward the coast. Address: Siquijor Circumferential Road, Poblacion, San Juan.",
+        history: "The natural spring was developed as a town gathering place, with the pool area shaped by local residents. It remains part of everyday community life, including picnics and local gatherings.",
+        conservation: "The spring is maintained as a public community space. Avoid soaps and products in the spring pools, do not disturb fish or the natural bottom, and leave the area clean.",
+        contact: "There is no dedicated front desk listed. For park rules or group visits, contact the Municipality of San Juan or the Siquijor Provincial Tourism Office."
+      },
+      "Pitogo Cliff Nature Park": {
+        about: "Pitogo Cliff Nature Park is a coastal viewpoint and swimming area near Maite/Tag-ibo in San Juan. The supplied notes list an entrance fee of about ₱30 and daily hours around 7:00 AM–6:00 PM; fees and hours can change, so confirm locally.",
+        history: "The park’s name refers to the native Pitogo cycads found along the cliffs. A local lookout has developed into a community-supported stop along the coastal road.",
+        conservation: "Keep away from unsafe cliff edges and follow local swimming and tide guidance. Do not damage Pitogo trees or other vegetation, leave no litter, and wear suitable footwear around sharp rocks and coral.",
+        contact: "The supplied notes list +63 931 105 3877. Confirm the number and current visitor rules before travelling."
+      },
+      "Bulalakaw Forest Reservation": {
+        about: "Bulalakaw (also spelled Bulakaw) Forest Reservation is an upland forest area in San Juan with limited facilities. It is generally visited as a short stop during an inland trip; confirm road access and conditions locally.",
+        history: "The reserve is part of Siquijor’s forested uplands and watershed landscape. The supplied notes describe old-growth trees, small limestone caves, and natural springs in the area.",
+        conservation: "Forest cover helps shelter native species, protect groundwater, and support local watersheds. Stay on existing routes and avoid disturbing wildlife or plants.",
+        contact: "No dedicated visitor hotline is listed. Ask the Siquijor Provincial Tourism Office, San Juan Municipal Tourism Office, or a local guide about access and regulations."
+      },
+      "Lugnason Falls": {
+        about: "Lugnason Falls, also called Zodiac Falls, is a jungle waterfall in Barangay Napo, San Juan. A short shaded walk leads from the roadside to the pool, and smaller cascades continue along the stream. The supplied notes list an environmental fee of about ₱20–₱25; confirm current fees and water conditions locally.",
+        history: "The stream’s smaller cascades are associated with the twelve zodiac signs, which is the source of the name Zodiac Falls. Water flow can vary with seasonal conditions.",
+        conservation: "Protect the spring and stream by taking rubbish with you and avoiding soaps or chemical products in the water. Check water depth before swimming or jumping, and use footwear suitable for slippery rocks.",
+        contact: "No dedicated government hotline is listed. The site is locally managed; ask Barangay Napo or the San Juan Municipal Tourism Office about access, guides, and current conditions."
+      },
+      "Maite Marine Sanctuary": {
+        about: "Maite Marine Sanctuary is a community-managed coastal protected area in San Juan, known for coral slopes and marine life. The supplied notes list an entrance fee around ₱100 and guide or equipment packages around ₱250–₱450; confirm current rates and requirements with the local caretakers.",
+        history: "The sanctuary was established around 2009 and is managed with local fisherfolk and community groups, including the Maite Resources Development Association. The supplied notes describe community monitoring and recovery work after destructive fishing pressures and Typhoon Odette.",
+        conservation: "The no-take area protects coral reefs and seagrass. Follow guide instructions, do not touch or stand on coral, do not collect shells, and use reef-safe sun protection.",
+        contact: "The supplied notes list +63 926 326 1399. Confirm the number, guide requirements, and sea conditions before visiting."
+      },
+      "Tubod Marine Sanctuary": {
+        about: "Tubod Marine Sanctuary is a protected reef area off Tubod, San Juan, near Coco Grove Beach Resort. The supplied notes list swimming and snorkeling fees and a temporary monthly rest period after the new moon; check current rates and restrictions with local caretakers before entering the water.",
+        history: "The sanctuary was first declared a protected area in 1989 under Municipal Ordinance 07-1989 and updated in 2003 under Municipal Ordinance 15-2003. Local rehabilitation and management have supported reef recovery after typhoon damage.",
+        conservation: "The protected area includes reef, seagrass, and sandy habitats. Fishing and motorized boats are prohibited inside the marked sanctuary boundary. Do not touch or stand on coral, and follow posted rules.",
+        contact: "Location: Tubod, San Juan, beside Coco Grove Beach Resort. For local rules and access, ask the San Juan Municipal Tourism Office or sanctuary caretakers. Confirm current resort and municipal contact details locally."
+      },
+      "Paliton Natural Coastal Area": {
+        about: "Paliton Beach is a palm-lined white-sand coastal area in Barangay Paliton, San Juan, known for clear water and sunset views. The supplied notes list a small entrance fee and optional vendor activities; confirm current fees and access locally.",
+        history: "Paliton has traditionally been used by local fishers and small vendors. Its west-facing sunset views and coastal scenery have made it a popular visitor stop while retaining a relatively simple community setting.",
+        conservation: "The nearby marine area supports coral, reef fish, and seagrass. Do not touch coral, avoid leaving rubbish, and use reef-safe sun protection to reduce harm to coastal habitats.",
+        contact: "This is a locally managed public coastal area without a listed dedicated booking hotline. Contact the San Juan Municipal Tourism Office for current access information."
+      },
+      "Salagdoong Man-Made Forest": {
+        about: "Salagdoong Man-Made Forest is a reforested road corridor of molave (tugas) and other trees leading toward Salagdoong Beach in Barangay Olang, Maria. Driving or walking through the forest road is generally free; the adjacent beach facilities may charge separately. Confirm current fees locally.",
+        history: "The forest was established through reforestation to restore tree cover and help reduce soil erosion. The supplied notes describe molave (tugas) among the trees along the access road.",
+        conservation: "The forest provides habitat for island wildlife and helps protect the landscape. Avoid littering, damaging trees, or disturbing wildlife.",
+        contact: "The supplied notes list the Salagdoong Beach Resort desk at +63 917 814 7305. Confirm the number and ask the Maria Municipal Tourism Office about current site operations."
+      },
+      "Minalulan Man Made Forest": {
+        about: "The Minalulan Man-Made Forest, also known as the Liloan or Salagdoong Man-Made Forest, is a scenic roadside forest in Maria on the way to Salagdoong Beach. Entrance and parking are free. It is open daily during daylight hours and is best visited early in the morning for cool, shaded light.",
+        history: "The forest lies along the road in Minalulan, Maria, toward Salagdoong Beach and near the Liloan/Bacong area on Siquijor’s eastern-southeastern side. It features dense stands of native molave trees alongside other planted woodland. Local community and government reforestation and stewardship initiatives helped restore tree cover and ecosystems.",
+        conservation: "The forest provides cooler shade, supports local biodiversity and endemic species, and helps protect soil along the coastal road. Island-wide forestry protection, including nearby reserves such as Mt. Bandilaan Nature Park, receives local support from DENR-PENRO Siquijor. Please avoid littering or damaging trees and plants.",
+        contact: "There is no formal visitor center or ticket office because this is a public roadside forest. For environmental or tourism questions, contact the Local Government Unit of Maria or the DENR-PENRO Siquijor office."
+      },
+      "Olang Marine Sanctuary": {
+        about: "Olang Marine Sanctuary is a community-managed marine protected area off Barangay Olang, Maria, near Salagdoong Beach. The supplied notes mention a wooden footbridge, shallow coastal water, coral gardens, and giant clams. Register with local caretakers and confirm current fees and guide requirements.",
+        history: "",
+        conservation: "The no-take sanctuary protects marine life, including reef fish, giant clams, and sea turtles. Do not fish, collect shells, touch or stand on coral, or use harmful products in the water. Follow local guide instructions.",
+        contact: "Visitors can register with the Barangay Olang caretakers. For general updates, ask the Maria Municipal Tourism Office or Siquijor Provincial Tourism Office; confirm current contact details locally."
+      },
+      "Cangbangag Falls": {
+        about: "Cangbangag Falls is a tall, secluded waterfall in the highlands near the Larena–Maria boundary. The supplied notes describe a steep 15–40 minute trail and an environmental fee package of about ₱150 that may include a local guide. Trail access and water flow vary; confirm conditions before visiting.",
+        history: "Local residents have traditionally reached the waterfall by rural trails, including routes from Catamboan in Larena and Pisong B in Maria. The falls are described in the supplied notes as Siquijor’s tallest single-drop cascade.",
+        conservation: "The surrounding upland forest protects a freshwater watershed. Stay on established paths, avoid soaps and chemicals in the water, and carry out all rubbish. Use extra care on steep or slippery sections.",
+        contact: "The supplied notes list +63 997 927 3030 for local site inquiries. Confirm the number, guide arrangements, and trail conditions before travelling."
+      },
+      "Kagusuan Natural Coastal Area": {
+        about: "Kagusuan Beach is a secluded rocky cove on the southeastern coast of Maria, near Barangays Lilo-an and Minalulan. The undeveloped shoreline is known for coral-rock formations, coastal trees, and pale sand. Check local access and sea conditions before visiting.",
+        history: "",
+        conservation: "Tide pools and rocky shores support small marine life. There are few facilities, so carry out all rubbish, avoid disturbing plants and animals, and take care around rocks and changing tides.",
+        contact: "There is no dedicated site office or hotline listed. Ask residents in Barangay Minalulan or the Maria Municipal Tourism Office about current trail access."
+      },
+      "Old Enchanted Balete Tree": {
+        about: "The Old Enchanted Balete Tree is a large banyan tree in Barangay Campalanas, Lazi. A freshwater spring at its roots flows into a shallow pool where visitors can see small fish. Follow posted site rules and confirm current entrance fees locally.",
+        history: "Local accounts describe the balete as more than 400 years old and one of the island’s oldest and largest trees. It is a well-known natural and cultural landmark in Lazi.",
+        conservation: "Protect the tree and spring by not climbing the roots or vines, keeping rubbish out of the pool, and following instructions about lotions or other products before entering the water.",
+        contact: "For site updates, check with the on-site operator or Lazi Municipal Tourism Office. The supplied notes also suggest checking the site’s official social media for current advisories."
+      },
+      "Bolo-bolo Cold Spring": {
+        about: "Bolo-bolo Cold Spring, locally called Bukal, is a clear freshwater spring in Barangay Capalasanan, Lazi. It is a quiet, lightly developed swimming spot upstream from Cambugahay Falls. Confirm road access and local conditions before visiting.",
+        history: "Local accounts describe Bolo-bolo as a source for the river system flowing toward Cambugahay Falls and as a community water source. The name is also associated with a traditional Visayan healing practice using spring water.",
+        conservation: "The spring supplies nearby waterways. Do not use soap, shampoo, or detergents in the water; avoid disturbing the springbed and plants; and carry out all rubbish.",
+        contact: "There is no dedicated visitor office or hotline listed. Ask Barangay Capalasanan residents or the Lazi Municipal Tourism Office for current access information."
+      },
+      "Kakulasa Falls": {
+        about: "Kakulasa Falls is a small, secluded waterfall and river pool in Lazi’s inland forest. The supplied notes describe it as a quiet swimming stop and a possible starting point for a river walk toward nearby waterfalls. Confirm trail access and conditions with local caretakers.",
+        history: "",
+        conservation: "Community stewardship helps keep the site lightly developed. Carry out rubbish and avoid soaps, shampoos, or chemical products in the freshwater stream, which continues downstream.",
+        contact: "Visitors can ask local caretakers at the trailhead about access and fees. For weather or guide information, contact the Lazi Municipal Tourism Office."
+      },
+      "Cambugahay Falls": {
+        about: "Cambugahay Falls is a well-known, multi-tiered waterfall in Barangay Kinamandagan, Lazi, with turquoise spring-fed pools, rope swings, and bamboo rafts. A steep staircase leads down to the falls. Confirm current entrance fees, facilities, and safety conditions locally.",
+        history: "",
+        conservation: "Help protect the river by avoiding soaps and chemical products in the pools, staying on safe routes, and carrying out rubbish. Follow local swimming guidance and respect any photography or drone restrictions.",
+        contact: "Visitor assistance is available at the local trailhead. For weather closures or advisories, contact the Lazi Municipal Tourism Office or Siquijor Tourist Police; confirm current hotline numbers locally."
+      },
+      "Laga-an Falls": {
+        about: "Laga-an Falls is a two-tiered waterfall in Barangay Lower Kinamandagan, Lazi, with pools, a natural rock slide, and a small cave behind the cascade. Confirm access, safety conditions, and any local fees with caretakers before visiting.",
+        history: "The falls are part of Lazi’s inland river network near Cambugahay, Cabugsayan, Kawasan, and Locong Falls. Local caretakers manage the site as a quieter alternative to busier attractions.",
+        conservation: "The surrounding forest and river remain lightly developed. Carry out rubbish, avoid single-use plastics, and do not use soaps or shampoos in the pools.",
+        contact: "The supplied notes list +63 965 698 1313 for the site desk and +63 956 117 2218 for a local coordinator. Confirm both numbers and current trail conditions before visiting."
+      },
+      "Lalag Bato Marine Sanctuary": {
+        about: "Lalag Bato Marine Sanctuary is a community-managed protected coastal area in Barangay Lower Cabangcalan, Lazi. It is known for clear water and coral reefs, with limited facilities and an unpaved access track. Confirm access, fees, and guide requirements locally.",
+        history: "The supplied notes describe the sanctuary as a grassroots coastal initiative managed with local barangay caretakers.",
+        conservation: "Protect the reef by following local guide instructions, avoiding contact with coral, not collecting shells, and taking all rubbish with you. Use reef-safe sun protection.",
+        contact: "Visitors register with local caretakers at the shoreline. The supplied notes list a community Facebook page under Lalag Bato Marine Sanctuary; ask the Lazi Municipal Tourism Office about current access and sea conditions."
+      },
+      "Sandugan Marine Sanctuary": {
+        about: "Sandugan Marine Sanctuary is a protected coastal area along Barangay Sandugan and Cangmalalag in Larena, with seagrass and coral reef habitats. The supplied notes list an entrance fee around ₱100 and local guide requirements; confirm current rates and access with caretakers.",
+        history: "The sanctuary is described in the supplied notes as one of Larena’s early community marine sanctuaries, established in the late 1980s. The reef wall has become a local destination for diving and snorkeling.",
+        conservation: "The protected area supports coral, seagrass, and marine wildlife. Follow guide instructions, do not touch or stand on coral, do not collect shells, and respect no-fishing zones.",
+        contact: "Visitors register with caretakers at the shoreline. For diving arrangements or travel advisories, ask the Larena Municipal Tourism Office or Siquijor Provincial Tourism Office. Confirm current details locally."
+      },
+      "Cangbagsa Coastal Natural Area": {
+        about: "Cangbagsa Coastal Natural Area, also called Cangbagsa Marine Sanctuary, is a quiet coastal zone in Barangay Cangbagsa, Larena, with reef and seagrass habitat. Facilities are limited. Ask local caretakers about registration, fees, and guide requirements before entering the water.",
+        history: "The supplied notes describe barangay-level coastal protection alongside other Larena marine sanctuaries to support local fishing grounds and nearshore habitats.",
+        conservation: "Respect any no-fishing zones and do not touch or stand on coral or collect shells. Carry out rubbish and follow local guide instructions when snorkeling or diving.",
+        contact: "Ask Barangay Cangbagsa or the Larena Municipal Tourism Office for current access details. The supplied notes list lgu.larena@gmail.com and the Siquijor Provincial Tourism Office; confirm contact details before use."
+      },
+      "Tulapos Marine Sanctuary": {
+        about: "Tulapos Marine Sanctuary is a community-managed marine protected area in Barangay Tulapos, Enrique Villanueva, with mangrove, seagrass, and coral habitats. Visitors can register on site and explore with local guides. Confirm current fees and sea conditions locally.",
+        history: "The supplied notes describe Tulapos as Siquijor’s oldest and largest marine protected area. Local community members manage visitor registration and conservation activities through TUMPAAS.",
+        conservation: "The reserve protects mangroves, seagrass, and coral reef habitat. Follow guides through designated entry routes, avoid touching or standing on coral, and do not collect shells or marine life.",
+        contact: "Register at the TUMPAAS reception hut. For weather or tide updates, ask the Enrique Villanueva Municipal Tourism Office or Siquijor Provincial Tourism Office; confirm current contact details."
+      },
+      "Ostrich Park Siquijor": {
+        about: "Ostrich Park Siquijor is a private animal park in Sitio Mohon, Barangay Nagerong, Lazi. The supplied notes describe supervised opportunities to feed ostriches and koi and see ornamental poultry.",
+        history: "",
+        conservation: "This is a private animal park, not a wildlife sanctuary. Follow staff instructions during animal interactions, handle animals gently, and do not feed them outside food.",
+        contact: "The supplied notes list +63 956 521 0551 and the Ostrich Park Siquijor Facebook page. Confirm current details before visiting."
+      },
+      "Bitaug Marine Protected Area": {
+        about: "Bitaug Marine Protected Area is a community-led marine sanctuary off Barangay Bitaug, Enrique Villanueva. The supplied notes describe a 149.46-hectare protected area with reef, seagrass, and mangrove habitats. Visitors should register with local caretakers and confirm current guide requirements and fees.",
+        history: "The supplied notes describe an 18-year community campaign beginning around 2007, followed by scientific surveys and planning with local groups and partner organizations. It was officially launched in 2025 under Municipal Ordinance No. 385, Series of 2025.",
+        conservation: "The area has a no-take core zone and a regulated buffer zone. Follow designated routes and guide instructions; do not touch or stand on coral, collect marine life, or enter restricted areas.",
+        contact: "Ask the Bitaug Fisherfolk Association or Barangay Bitaug officials at the coastal post. For municipal inquiries, contact the Enrique Villanueva Municipal Government. Confirm current phone numbers and visitor arrangements locally."
+      }
+    };
+    const grid = document.querySelector("#municipalitiesGrid");
+    const modal = document.querySelector("#municipalityModal");
+    const nav = document.querySelector("#main-nav");
+    const menuButton = document.querySelector(".mobile-menu-toggle");
+    let selectedTown = null;
+
+    function makeCards() {
+      Object.entries(towns).forEach(([key, town]) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "municipality-card";
+        button.dataset.town = key;
+
+        const image = document.createElement("img");
+        image.src = town.cover;
+        image.alt = "";
+        image.loading = "lazy";
+
+        const imageWrap = document.createElement("span");
+        imageWrap.className = "card-image-wrap";
+
+        const overlay = document.createElement("span");
+        overlay.className = "card-overlay";
+
+        const name = document.createElement("span");
+        name.className = "municipality-name";
+        name.textContent = town.name;
+
+        const action = document.createElement("span");
+        action.className = "card-arrow";
+        action.textContent = "View parks →";
+
+        const caption = document.createElement("span");
+        caption.className = "card-caption";
+        caption.textContent = town.tagline;
+
+        overlay.append(name, action);
+        imageWrap.append(image, overlay);
+        button.append(imageWrap, caption);
+        button.addEventListener("click", () => openTown(key));
+        grid.appendChild(button);
+      });
+    }
+
+    function openTown(key) {
+      selectedTown = towns[key];
+      document.querySelector("#modalTitle").textContent = selectedTown.name;
+      document.querySelector("#modalTagline").textContent = selectedTown.tagline;
+      const modalBanner = document.querySelector("#modalBanner");
+      modalBanner.style.backgroundImage = 'linear-gradient(rgba(255,255,255,.22), rgba(255,255,255,.22)), url("municipality-background.jpg")';
+      modalBanner.style.backgroundSize = "cover";
+      modalBanner.style.backgroundPosition = "center";
+
+      const chips = document.querySelector("#parkChipsContainer");
+      chips.replaceChildren();
+
+      selectedTown.parks.forEach((park, index) => {
+        const chip = document.createElement("button");
+        chip.type = "button";
+        chip.className = "park-chip";
+        chip.textContent = park.name;
+        chip.addEventListener("click", () => showPark(index, true));
+        chips.appendChild(chip);
+      });
+
+      modal.querySelector(".modal-content").scrollTop = 0;
+      modal.classList.add("is-open");
+      document.body.style.overflow = "hidden";
+      showPark(0);
+      document.querySelector("#modalCloseBtn").focus();
+    }
+
+    function showPark(index, jumpToDetails = false) {
+      const park = selectedTown.parks[index];
+      const info = parkInfo[park.name] || (park.name === "Mt. Bandilaan Forest Reserve" ? parkInfo["Mt. Bandilaan"] : park);
+
+      document.querySelectorAll(".park-chip").forEach((chip, i) => {
+        chip.classList.toggle("active", i === index);
+      });
+
+      document.querySelector("#parkName").textContent = park.name;
+      document.querySelector("#parkCategory").textContent = park.category;
+      document.querySelector("#parkLocationSummary").textContent =
+        `${selectedTown.name}, Siquijor`;
+      const heroImage = document.querySelector("#parkHeroImage");
+      heroImage.src = park.images[0];
+      heroImage.alt = `${park.name} in ${selectedTown.name}`;
+
+      document.querySelector("#aboutSummary").textContent = info.about || park.about || "";
+      document.querySelector("#historyNarrative").textContent = info.history || "";
+document.querySelector("#contactOffice").textContent = info.contact || `${selectedTown.name} Municipal Tourism Office. Confirm current visitor information locally.`;
+document.querySelector("#conservationText").textContent = info.conservation || `Follow posted rules, respect wildlife and plants, and take your litter with you at ${park.name}.`;
+      document.querySelector("#locAddress").textContent =
+        `${selectedTown.name}, Siquijor, Philippines`;
+      document.querySelector("#locDirections").textContent =
+        `Use local transport to reach ${park.name} in ${selectedTown.name}. Ask a local driver or tourism office for the current route and access conditions.`;
+            const mapQuery = `${park.name}, ${selectedTown.name}, Siquijor`;
+      const mapLink = document.querySelector("#locMapBtn");
+      mapLink.href = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mapQuery)}`;
+      mapLink.dataset.mapQuery = mapQuery;
+
+      
+
+      
+
+      const gallery = document.querySelector("#galleryGrid");
+      gallery.replaceChildren();
+
+      park.images.forEach((src, imageIndex) => {
+        const figure = document.createElement("figure");
+        const image = document.createElement("img");
+image.src = src;
+        image.alt = `${park.name}, photo ${imageIndex + 1}`;
+        image.loading = "lazy";
+figure.append(image);
+        gallery.appendChild(figure);
+      });
+
+      showTab("about");
+      if (jumpToDetails) {
+        requestAnimationFrame(() => {
+          const modalContent = modal.querySelector(".modal-content");
+          const picker = document.querySelector(".park-picker-sticky");
+          const detailHero = document.querySelector("#parkHero");
+          const targetTop = detailHero.getBoundingClientRect().top - modalContent.getBoundingClientRect().top + modalContent.scrollTop - picker.offsetHeight;
+          modalContent.scrollTo({ top: Math.max(0, targetTop), behavior: "smooth" });
+        });
+      }
+    }
+
+    function showTab(name) {
+      document.querySelectorAll(".park-tab").forEach((tab) => {
+        tab.classList.toggle("active", tab.dataset.tab === name);
+      });
+      document.querySelectorAll(".park-pane").forEach((pane) => {
+        pane.classList.toggle("active", pane.id === `pane-${name}`);
+      });
+    }
+
+    document.querySelectorAll(".park-tab").forEach((tab) => {
+      tab.addEventListener("click", () => showTab(tab.dataset.tab));
+    });
+
+    function closeModal() {
+      modal.classList.remove("is-open");
+      document.body.style.overflow = "";
+    }
+
+
+    const imageLightbox = document.querySelector("#imageLightbox");
+    const lightboxImage = document.querySelector("#lightboxImage");
+    const lightboxClose = document.querySelector("#imageLightboxClose");
+
+    function closeImageLightbox() {
+      imageLightbox.classList.remove("is-open");
+      imageLightbox.setAttribute("aria-hidden", "true");
+      lightboxImage.removeAttribute("src");
+    }
+
+    document.querySelector("#galleryGrid").addEventListener("click", (event) => {
+      const image = event.target.closest("img");
+      if (!image) return;
+      lightboxImage.src = image.currentSrc || image.src;
+      lightboxImage.alt = image.alt || "Expanded gallery image";
+      imageLightbox.classList.add("is-open");
+      imageLightbox.setAttribute("aria-hidden", "false");
+      lightboxClose.focus();
+    });
+
+    lightboxClose.addEventListener("click", closeImageLightbox);
+    imageLightbox.addEventListener("click", (event) => {
+      if (event.target === imageLightbox) closeImageLightbox();
+    });
+    const mapModal = document.querySelector("#mapModal");
+    const mapFrame = document.querySelector("#mapFrame");
+    const mapCloseButton = document.querySelector("#mapModalClose");
+    const mapExternalLink = document.querySelector("#mapExternalLink");
+    const mapLink = document.querySelector("#locMapBtn");
+
+    function openMap() {
+      const query = mapLink.dataset.mapQuery || mapLink.href;
+      mapFrame.src = `https://maps.google.com/maps?q=${encodeURIComponent(query)}&output=embed`;
+      mapExternalLink.href = mapLink.href;
+      mapModal.classList.add("is-open");
+      mapModal.setAttribute("aria-hidden", "false");
+      mapCloseButton.focus();
+    }
+
+    function closeMap() {
+      mapModal.classList.remove("is-open");
+      mapModal.setAttribute("aria-hidden", "true");
+      mapFrame.src = "about:blank";
+      mapLink.focus();
+    }
+
+    mapLink.addEventListener("click", (event) => {
+      event.preventDefault();
+      openMap();
+    });
+    mapCloseButton.addEventListener("click", closeMap);
+    mapModal.addEventListener("click", (event) => {
+      if (event.target === mapModal) closeMap();
+    });
+
+    document.querySelector("#modalCloseBtn").addEventListener("click", closeModal);
+
+    modal.addEventListener("click", (event) => {
+      if (event.target === modal) closeModal();
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && imageLightbox.classList.contains("is-open")) closeImageLightbox();
+      else if (event.key === "Escape" && mapModal.classList.contains("is-open")) closeMap();
+      else if (event.key === "Escape" && modal.classList.contains("is-open")) closeModal();
+    });
+
+    menuButton.addEventListener("click", () => {
+      const isOpen = menuButton.getAttribute("aria-expanded") === "true";
+      menuButton.setAttribute("aria-expanded", String(!isOpen));
+      nav.classList.toggle("is-open", !isOpen);
+    });
+
+    nav.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => {
+        nav.classList.remove("is-open");
+        menuButton.setAttribute("aria-expanded", "false");
+      });
+    });
+
+    makeCards();
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
