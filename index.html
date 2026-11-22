@@ -4,7 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Siquijor Nature Park Explorer</title>
-  <link rel="icon" type="image/jpg" href="dens.jpg">
+  <link rel="icon" type="image/jpeg" href="dens.jpg">
+
+  <!-- Open Graph / Messenger / Facebook preview -->
+  <meta property="og:title" content="Siquijor Nature Park Explorer">
+  <meta property="og:description" content="Discover forests, springs, waterfalls, coastal areas, and marine sanctuaries across Siquijor's six municipalities.">
+  <meta property="og:image" content="https://jeralden-baroy.onrender.com/dens.jpg">
+  <meta property="og:url" content="https://jeralden-baroy.onrender.com/">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://jeralden-baroy.onrender.com/dens.jpg">
 
   <style>
     :root {
@@ -64,7 +73,7 @@
       text-decoration: none;
     }
 
-    .brand-icon { width: 48px; height: 48px; flex: 0 0 auto; object-fit: contain; display: block; }
+    .brand-icon { width: 48px; height: 48px; flex: 0 0 auto; object-fit: cover; border-radius: 6px; display: block; }
     .brand-title, .brand-subtitle { display: block; }
     .brand-title { font-weight: 700; }
 
@@ -115,7 +124,7 @@
       color: white;
       background:
         linear-gradient(rgba(8, 30, 22, .38), rgba(8, 30, 22, .38)),
-        url("dens.jpg") center / cover no-repeat;
+        url("dens-banner-wide.png") center / cover no-repeat;
       background-color: #17323b;
     }
 
@@ -339,7 +348,7 @@
       min-height: 2in;
       display: flex;
       align-items: end;
-      color: #000;
+      color: #123b4a;
       background-position: center;
       background-size: 100% 100%, 160px auto;
       background-repeat: no-repeat;
@@ -353,7 +362,7 @@
       padding: 12px;
       border: 2px solid #000;
       border-radius: 6px;
-      background: rgba(255, 255, 255, .12);
+      background: rgba(230, 230, 230, .90);
       text-align: center;
     }
     .modal-town-badge {
@@ -370,7 +379,7 @@
       margin: 10px 0 0;
       font-family: Georgia, serif;
       font-size: clamp(34px, 6vw, 54px);
-      color: #000;
+      color: #123b4a;
     }
 
     .modal-explorer-body { padding: 25px 30px 40px; background: #fff1f3; }
@@ -783,40 +792,36 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      width: auto;
-      height: auto;
-      max-width: 96vw;
-      max-height: 94vh;
-      padding: 0;
-      border: 0;
-      border-radius: 6px;
-      background: transparent;
-      box-shadow: none;
+      width: min(1100px, 96vw);
+      height: min(800px, 92vh);
+      padding: 18px;
+      border: 1px solid #000;
+      border-radius: 8px;
+      background: #e6e6e6;
     }
 
     .image-lightbox-panel img {
       display: block;
-      max-width: 96vw;
-      max-height: 94vh;
+      max-width: 100%;
+      max-height: 100%;
       object-fit: contain;
-      border-radius: 6px;
+      border-radius: 4px;
     }
 
     .image-lightbox-close {
       position: absolute;
-      top: 10px;
-      right: 10px;
+      top: 8px;
+      right: 8px;
       z-index: 1;
-      width: 40px;
-      height: 40px;
-      border: 0;
+      width: 38px;
+      height: 38px;
+      border: 1px solid #000;
       border-radius: 50%;
-      background: rgba(255, 255, 255, .94);
+      background: #fff;
       color: #000;
       font-size: 26px;
       line-height: 1;
       cursor: pointer;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, .28);
     }
   </style>
 </head>
@@ -825,7 +830,7 @@
   <header class="site-header">
     <div class="nav-container">
       <a href="#hero" class="brand-logo">
-        <img class="brand-icon" src="siquijor-seal.png" alt="Municipality of Siquijor seal">
+        <img class="brand-icon" src="dens.jpg" alt="Siquijor Nature Park Logo">
         <span>
           <span class="brand-title">Siquijor Nature Park</span>
           <span class="brand-subtitle">Information System</span>
@@ -993,8 +998,8 @@
       siquijor: {
         name: "Siquijor",
         tagline: "Island capital, highland forest, springs, and nature learning.",
-        cover: "dens.jpg",
-      seal: "siquijor-seal.png",
+        cover: "siquijor.jpg",
+      seal: "dens.jpg",
         parks: [
           {
   name: "Mt. Bandilaan",
@@ -1003,9 +1008,9 @@
   history: "",
   contact: "Ask the Siquijor Municipal Tourism Office for current visitor information.",
   conservation: "Stay on marked trails, avoid disturbing wildlife, and take your rubbish with you.",
-  images: ["bandilaan1.jpg","ban4.jpg","ban5.jpg"]
+  images: ["bandilaan1.jpg", "bandilaan2.jpg", "bandilaan3.jpg","bandilaan4.jpg","bandilaan5.jpg"]
 },
-          { name: "Guiwanon Spring Park", category: "Spring and mangrove park", about: "A nature stop where visitors can appreciate spring water, mangroves, and coastal ecology in a shaded setting.", images: ["guii1.png","guii2.jpg","guii3.jpg"] },
+          { name: "Guiwanon Spring Park", category: "Spring and mangrove park", about: "A nature stop where visitors can appreciate spring water, mangroves, and coastal ecology in a shaded setting.", images: ["guiwanon.jpg","gui.jpg","gui2.jpg","gui3.jpg","gui4.jpg",] },
          
           {
   name: "Siquijor Butterfly Sanctuary",
@@ -1014,7 +1019,7 @@
   history: "The Siquijor Butterfly Sanctuary was established and managed by local caretaker Dante Jumapit. It was created to breed, protect, and conserve local butterfly species while educating visitors about their importance to the environment.It has also become an educational and eco-tourism destination for visitors interested in nature.",
   contact: "Reachable via mobile numbers such as 0946 628 8062, 0960 676 4835, or 0933 357 007",
   conservation: "The sanctuary breeds local butterfly species, releases some into natural habitats, and protects the plants they need. It also teaches visitors about the butterfly life cycle, biodiversity, and caring for the environment.",
-  images: ["butt5.jpg","butt4.jpg","butt3.jpg"]
+  images: ["butterfly.jpg","but2.jpg","but3.jpg","but.jpg","but5.jpg","but6.jpg"]
 },
         ]
 
@@ -1026,12 +1031,12 @@
         cover: "sanjuan.jpg",
       seal: "seal-sanjuan.png",
         parks: [
-          { name: "Capilay Spring Park", category: "Spring park", about: "A leafy town park centered around a natural spring and a relaxed local gathering place.", images: ["capp1.jpg","cappp2.jpg","cappp3.jpg"] },
-          { name: "Pitogo Cliff Nature Park", category: "Coastal viewpoint", about: "A scenic coastal area with elevated views. Keep a safe distance from cliff edges.", images: ["pitt1.jpg","pitt3.jpg","pitt4.jpg"] },
-          { name: "Lugnason Falls", category: "Waterfall", about: "A forest waterfall and freshwater destination. Check water conditions locally before swimming.", images: ["lug1.png","lug2.png","lug3.png"] },
-          { name: "Maite Marine Sanctuary", category: "Marine sanctuary", about: "A protected coastal habitat where visitors can learn about reef life and responsible snorkeling.", images: ["matt1.jpg","matt3.jpg","matt5.jpg"] },
-          { name: "Tubod Marine Sanctuary", category: "Marine sanctuary", about: "A community-managed reef area popular for snorkeling. Do not stand on coral or feed marine life.", images: ["tubb1.jpg","tubb2.jpg","tubb3.jpg"] },
-          { name: "Paliton Natural Coastal Area", category: "Coastal area", about: "A beautiful stretch of coastline known for beach scenery and clear water. Keep it clean.", images: ["pall1.png","pall2.png","pall3.png"] }
+          { name: "Capilay Spring Park", category: "Spring park", about: "A leafy town park centered around a natural spring and a relaxed local gathering place.", images: ["cap1.jpg","cap2.jpg","cap3.jpg","cap4.jpg","cap5.jpg"] },
+          { name: "Pitogo Cliff Nature Park", category: "Coastal viewpoint", about: "A scenic coastal area with elevated views. Keep a safe distance from cliff edges.", images: ["palit.jpg","pit1.jpg","pit2.jpg","pit4.jpg","pit5.jpg",] },
+          { name: "Lugnason Falls", category: "Waterfall", about: "A forest waterfall and freshwater destination. Check water conditions locally before swimming.", images: ["lug1.jpg","lug2.jpg","lug3.jpg","lug4.jpg"] },
+          { name: "Maite Marine Sanctuary", category: "Marine sanctuary", about: "A protected coastal habitat where visitors can learn about reef life and responsible snorkeling.", images: ["tubod.jpg","maiti.jpg","maiti1.jpg","maiti2.jpg","maiti3.jpg","maiti4.jpg"] },
+          { name: "Tubod Marine Sanctuary", category: "Marine sanctuary", about: "A community-managed reef area popular for snorkeling. Do not stand on coral or feed marine life.", images: ["tubod1.jpg","tubod2.jpg","tubod3.jpg","tubod4.jpg","tubod5.jpg"] },
+          { name: "Paliton Natural Coastal Area", category: "Coastal area", about: "A beautiful stretch of coastline known for beach scenery and clear water. Keep it clean.", images: ["pal.jpg","pal1.jpg","pal2.jpg","pal3.jpg","pal4.jpg"] }
         ]
       },
       maria: {
@@ -1040,9 +1045,9 @@
         cover: "maria.jpg",
       seal: "seal-maria.png",
         parks: [
-          { name: "Salagdoong Man-Made Forest", category: "Forest landscape", about: "A tree-lined forest area near the coast, offering shade and a scenic route.", images: ["sall3.png","sall1.png","sall4.png"] },
-          { name: "Olang Marine Sanctuary", category: "Marine sanctuary", about: "A protected marine area that supports coastal habitats. Ask local guides about permitted activities.", images: ["oll1.png","oll2.png","oll3.png",] },
-          { name: "Minalulan Man Made Forest", category: "Man-made forest", about: "The Minalulan Man-Made Forest, also called the Liloan or Salagdoong Man-Made Forest, is a scenic roadside forest in Maria along the route to Salagdoong Beach. Entrance and parking are free. It is open daily during daylight hours; visit in the morning for cool, shaded light.", images: ["minn1.png","minn2.png","minn3.png",] }
+          { name: "Salagdoong Man-Made Forest", category: "Forest landscape", about: "A tree-lined forest area near the coast, offering shade and a scenic route.", images: ["sala.jpg","salagdoong.jpg","sal2.jpg","sal3.jpg","sal4.jpg"] },
+          { name: "Olang Marine Sanctuary", category: "Marine sanctuary", about: "A protected marine area that supports coastal habitats. Ask local guides about permitted activities.", images: ["olangs.jpg","olang1.jpg","olang2.jpg","olang3.jpg","olang4.jpg","olang.jpg"] },
+          { name: "Minalulan Man Made Forest", category: "Man-made forest", about: "The Minalulan Man-Made Forest, also called the Liloan or Salagdoong Man-Made Forest, is a scenic roadside forest in Maria along the route to Salagdoong Beach. Entrance and parking are free. It is open daily during daylight hours; visit in the morning for cool, shaded light.", images: ["mina.jpg","min2.jpg","min3.jpg","min4.jpg"] }
         ]
       },
       lazi: {
@@ -1052,11 +1057,11 @@
       seal: "seal-lazi.png",
         parks: [
           
-          { name: "Old Enchanted", category: "Heritage tree", about: "A much-loved old balete tree and freshwater stop surrounded by local stories and nature.", images: ["ball1.png","ball2.png","ball3.jpg"] },
-          { name: "Bolo-bolo Cold Spring", category: "Cold spring", about: "A refreshing spring destination for a quiet break. Follow posted swimming and safety guidance.", images: ["boll1.png","boll2.png","boll3.png"] },
-          { name: "Locong Falls", category: "Waterfall", about: "A peaceful freshwater setting surrounded by tropical greenery. Rocks may be slippery.", images: ["lokk1.png","lokk2.png","lokk3.png",] },
-          { name: "Cambugahay Falls", category: "Waterfall", about: "A series of blue-green pools and cascades, among the island’s best-known nature attractions.", images: ["camm1.png","camm2.png","camm3.png",] },
-          { name: "Ostrich Park Siquijor", category: "Private animal park", about: "A family-run animal park in Sitio Mohon, Barangay Nagerong, Lazi. Visitors may interact with ostriches, koi, and ornamental poultry under staff supervision. Confirm current admission and opening hours before visiting.", images: ["oss1.png","oss2.png","oss3.png",] }
+          { name: "Old Enchanted Balete Tree", category: "Heritage tree", about: "A much-loved old balete tree and freshwater stop surrounded by local stories and nature.", images: ["bal1.jpg","bal2.jpg","bal3.jpg","bal4.jpg","bal5.jpg"] },
+          { name: "Bolo-bolo Cold Spring", category: "Cold spring", about: "A refreshing spring destination for a quiet break. Follow posted swimming and safety guidance.", images: ["bols.jpg","bol5.jpg","bol2.jpg","bol3.jpg","bol4.jpg"] },
+          { name: "Locong Falls", category: "Waterfall", about: "A peaceful freshwater setting surrounded by tropical greenery. Rocks may be slippery.", images: ["buga.jpg","lok2.jpg","lok3.jpg","lok4.jpg","lok5.jpg"] },
+          { name: "Cambugahay Falls", category: "Waterfall", about: "A series of blue-green pools and cascades, among the island’s best-known nature attractions.", images: ["gahay.jpg","cam1.jpg","cam2.jpg","cam3.jpg","cam4.jpg",] },
+          { name: "Ostrich Park Siquijor", category: "Private animal park", about: "A family-run animal park in Sitio Mohon, Barangay Nagerong, Lazi. Visitors may interact with ostriches, koi, and ornamental poultry under staff supervision. Confirm current admission and opening hours before visiting.", images: ["osti.jpg","os2.jpg","os3.jpg","os4.jpg"] }
         ]
       },
       larena: {
@@ -1065,19 +1070,19 @@
         cover: "larena.jpg",
       seal: "seal-larena.png",
         parks: [
-          { name: "Sandugan Marine Sanctuary", category: "Marine sanctuary", about: "A coastal sanctuary with marine habitats and community stewardship. Ask local guides about access.", images: ["sann1.png","sann2.png","sann3.png"] },
-          { name: "Cangbagsa Coastal Natural Area", category: "Coastal area", about: "A natural coastal landscape suited to a quiet visit. Take all waste with you.", images: ["cangg3.png","cangg2.png","cangg1.png"] }
+          { name: "Sandugan Marine Sanctuary", category: "Marine sanctuary", about: "A coastal sanctuary with marine habitats and community stewardship. Ask local guides about access.", images: ["sand1.jpg","sand2.jpg","sand4.jpg"] },
+          { name: "Cangbagsa Coastal Natural Area", category: "Coastal area", about: "A natural coastal landscape suited to a quiet visit. Take all waste with you.", images: ["cang1.jpg","cang2.jpg","cang3.jpg","cang4.jpg","cang5.jpg"] }
         ]
       },
       enrique_villanueva: {
         name: "Enrique Villanueva",
         tagline: "A quieter northeastern coast with rich marine habitats.",
-        cover: "talingting.jpg",
+        cover: "enrique.jpg",
       seal: "seal-enrique.png",
         parks: [
-          { name: "Tulapos Marine Sanctuary", category: "Marine sanctuary", about: "A known community marine sanctuary where guided visits can introduce visitors to reef life and conservation.", images: ["tulll1.png","tulll2.png","tulll3.png"] },
-          { name: "Bitaug Marine Protected Area", category: "Marine protected area", about: "A protected coastal habitat. Follow local guidance on swimming, boating, and snorkeling boundaries.", images: ["bit1.png","bit2.jpg","bit3.jpg"] },
-          { name: "Bino-ongan Marine Sanctuary", category: "Marine sanctuary", about: "A community conservation area that helps protect marine life and coastal ecosystems.", images: ["binn1.jpg","binn2.jpg","binn3.jpg"] }
+          { name: "Tulapos Marine Sanctuary", category: "Marine sanctuary", about: "A known community marine sanctuary where guided visits can introduce visitors to reef life and conservation.", images: ["tula.jpg","tul2.jpg","tul1.jpg","tul4.jpg"] },
+          { name: "Bitaug Marine Protected Area", category: "Marine protected area", about: "A protected coastal habitat. Follow local guidance on swimming, boating, and snorkeling boundaries.", images: ["bita1.jpg","bita2.jpg","bita3.jpg"] },
+          { name: "Bino-ongan Marine Sanctuary", category: "Marine sanctuary", about: "A community conservation area that helps protect marine life and coastal ecosystems.", images: ["ngan.jpg","ngan1.jpg","ngan3.jpg"] }
         ]
       }
     };
@@ -1294,10 +1299,8 @@
       selectedTown = towns[key];
       document.querySelector("#modalTitle").textContent = selectedTown.name;
       document.querySelector("#modalTagline").textContent = selectedTown.tagline;
-      const modalBanner = document.querySelector("#modalBanner");
-      modalBanner.style.backgroundImage = 'linear-gradient(rgba(255,255,255,.22), rgba(255,255,255,.22)), url("municipality-background.jpg")';
-      modalBanner.style.backgroundSize = "cover";
-      modalBanner.style.backgroundPosition = "center";
+      document.querySelector("#modalBanner").style.backgroundImage =
+        `linear-gradient(rgba(255,241,243,.35), rgba(255,241,243,.35)), url("${selectedTown.seal}")`;
 
       const chips = document.querySelector("#parkChipsContainer");
       chips.replaceChildren();
@@ -1479,20 +1482,3 @@ figure.append(image);
   </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
