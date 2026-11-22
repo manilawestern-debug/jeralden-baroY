@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Siquijor Nature Park Explorer</title>
-  <link rel="icon" type="image/jpeg" href="dens.jpg">
+  <link rel="icon" type="image/png" href="siquijor-seal.png">
 
-  <!-- Open Graph / Messenger / Facebook preview -->
+  <!-- Open Graph / Messenger / Facebook preview (Welcome to Siquijor picture) -->
   <meta property="og:title" content="Siquijor Nature Park Explorer">
   <meta property="og:description" content="Discover forests, springs, waterfalls, coastal areas, and marine sanctuaries across Siquijor's six municipalities.">
   <meta property="og:image" content="https://jeralden-baroy.onrender.com/dens.jpg">
@@ -73,7 +73,7 @@
       text-decoration: none;
     }
 
-    .brand-icon { width: 48px; height: 48px; flex: 0 0 auto; object-fit: cover; border-radius: 6px; display: block; }
+    .brand-icon { width: 48px; height: 48px; flex: 0 0 auto; object-fit: contain; display: block; }
     .brand-title, .brand-subtitle { display: block; }
     .brand-title { font-weight: 700; }
 
@@ -830,7 +830,7 @@
   <header class="site-header">
     <div class="nav-container">
       <a href="#hero" class="brand-logo">
-        <img class="brand-icon" src="dens.jpg" alt="Siquijor Nature Park Logo">
+        <img class="brand-icon" src="siquijor-seal.png" alt="Municipality of Siquijor seal">
         <span>
           <span class="brand-title">Siquijor Nature Park</span>
           <span class="brand-subtitle">Information System</span>
@@ -999,7 +999,7 @@
         name: "Siquijor",
         tagline: "Island capital, highland forest, springs, and nature learning.",
         cover: "siquijor.jpg",
-      seal: "dens.jpg",
+      seal: "siquijor-seal.png",
         parks: [
           {
   name: "Mt. Bandilaan",
@@ -1249,6 +1249,12 @@
         history: "The supplied notes describe an 18-year community campaign beginning around 2007, followed by scientific surveys and planning with local groups and partner organizations. It was officially launched in 2025 under Municipal Ordinance No. 385, Series of 2025.",
         conservation: "The area has a no-take core zone and a regulated buffer zone. Follow designated routes and guide instructions; do not touch or stand on coral, collect marine life, or enter restricted areas.",
         contact: "Ask the Bitaug Fisherfolk Association or Barangay Bitaug officials at the coastal post. For municipal inquiries, contact the Enrique Villanueva Municipal Government. Confirm current phone numbers and visitor arrangements locally."
+      },
+      "Bino-ongan Marine Sanctuary": {
+        about: "A community conservation area that helps protect marine life and coastal ecosystems in Enrique Villanueva.",
+        history: "",
+        conservation: "Follow local guide instructions. Do not touch coral, collect shells, or enter restricted areas.",
+        contact: "Ask the Enrique Villanueva Municipal Tourism Office for current access details."
       }
     };
     const grid = document.querySelector("#municipalitiesGrid");
